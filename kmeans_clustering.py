@@ -18,7 +18,7 @@ class MykmeansClustering:
         '''
         initialize self.model here and execute kmeans clustering here
         '''
-        self.model = KMeans(n_clusters=2)
+        self.model = KMeans(n_clusters=3)
         self.model.fit(self.data)
         
         cluster_centers = self.model.cluster_centers_
