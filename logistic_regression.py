@@ -39,7 +39,7 @@ class MyLogisticRegression:
         initialize self.model_linear here and call the fit function
         '''
         self.X_train = self.training_set[['exam_score_1', 'exam_score_2']].values
-        self.y_train = self.training_set[['label']].values
+        self.y_train = self.training_set[['label']].values.ravel()
 
         self.model_linear = LinearRegression()
         self.model_linear.fit(self.X_train, self.y_train)
@@ -49,7 +49,7 @@ class MyLogisticRegression:
         initialize self.model_logistic here and call the fit function
         '''
         self.X_train = self.training_set[['exam_score_1', 'exam_score_2']].values
-        self.y_train = self.training_set[['label']].values
+        self.y_train = self.training_set[['label']].values.ravel()
 
         self.model_logistic = LogisticRegression()
         self.model_logistic.fit(self.X_train, self.y_train)
@@ -65,14 +65,15 @@ class MyLogisticRegression:
         assert self.model_linear is not None, "Initialize the model, i.e. instantiate the variable self.model_linear in model_fit_linear method"
         assert self.training_set is not None, "self.read_csv function isn't called or the self.trianing_set hasn't been initialized "
         
-        if self.X_test is not None:
-            self.X_test = self.test_set[['exam_score_1', 'exam_score_2']].values
-            self.y_test = self.test_set[['label']].values
+        self.X_test = self.test_set[['exam_score_1', 'exam_score_2']].values
+        self.y_test = self.test_set[['label']].values
 
-            y_pred = self.model_linear.predict(self.X_test)
+        if self.X_test is not None:
+            y_pred_cont = self.model_linear.predict(self.X_test)
+            y_pred = (y_pred_cont >= 0.5).astype(int)
 
             accuracy = accuracy_score(self.y_test, y_pred)
-            precision, recall, f1, support = precision_recall_fscore_support(self.y_test, y_pred)
+            precision, recall, f1, support = precision_recall_fscore_support(self.y_test, y_pred, average=None)
 
         
         assert precision.shape == recall.shape == f1.shape == support.shape == (2,), "precision, recall, f1, support should be an array of shape (2,)"
@@ -89,10 +90,10 @@ class MyLogisticRegression:
         assert self.model_logistic is not None, "Initialize the model, i.e. instantiate the variable self.model_logistic in model_fit_logistic method"
         assert self.training_set is not None, "self.read_csv function isn't called or the self.trianing_set hasn't been initialized "
 
-        if self.X_test is not None:
-            self.X_test = self.test_set[['exam_score_1', 'exam_score_2']].values
-            self.y_test = self.test_set[['label']].values
+        self.X_test = self.test_set[['exam_score_1', 'exam_score_2']].values
+        self.y_test = self.test_set[['label']].values
 
+        if self.X_test is not None:
             y_pred = self.model_logistic.predict(self.X_test)
 
             accuracy = accuracy_score(self.y_test, y_pred)
@@ -108,5 +109,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     classifier = MyLogisticRegression(args.dataset_num, args.perform_test)
     acc = classifier.model_predict_linear()
+    print(acc)
     acc = classifier.model_predict_logistic()
-    
+    print(acc)
