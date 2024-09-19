@@ -38,14 +38,21 @@ class MyLogisticRegression:
         '''
         initialize self.model_linear here and call the fit function
         '''
-        pass
+        self.X_train = self.training_set[['exam_score_1', 'exam_score_2']].values
+        self.y_train = self.training_set[['label']].values
+
+        self.model_linear = LinearRegression()
+        self.model_linear.fit(self.X_train, self.y_train)
     
     def model_fit_logistic(self):
         '''
         initialize self.model_logistic here and call the fit function
         '''
+        self.X_train = self.training_set[['exam_score_1', 'exam_score_2']].values
+        self.y_train = self.training_set[['label']].values
 
-        pass
+        self.model_logistic = LogisticRegression()
+        self.model_logistic.fit(self.X_train, self.y_train)
     
     def model_predict_linear(self):
         '''

@@ -1,0 +1,10 @@
+#!/bin/sh
+'''exec' "/Users/carloshernandez/Documents/UNR CS/CS 482/cs482-682-fall2024-assignment_2-carlos-hernandez/virtual-env/bin/python3.12" "$0" "$@"
+' '''
+# -*- coding: utf-8 -*-
+import re
+import sys
+from numpy._configtool import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())

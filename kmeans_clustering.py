@@ -6,19 +6,22 @@ from sklearn.cluster import KMeans
 class MykmeansClustering:
     def __init__(self, dataset_file):
         self.model = None
-        
+        self.data = None
         self.dataset_file = dataset_file
         self.read_mat()
 
     def read_mat(self):
         mat = scipy.io.loadmat(self.dataset_file)
+        self.data = mat['X']
         
     def model_fit(self):
         '''
         initialize self.model here and execute kmeans clustering here
         '''
+        self.model = KMeans(n_clusters=2)
+        self.model.fit(self.data)
         
-        cluster_centers = np.array([[0,0]])
+        cluster_centers = self.model.cluster_centers_
         return cluster_centers
 
 if __name__ == '__main__':
