@@ -2,6 +2,7 @@ import numpy as np
 import argparse
 import scipy.io
 from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 
 class MykmeansClustering:
     def __init__(self, dataset_file):
@@ -18,7 +19,7 @@ class MykmeansClustering:
         '''
         initialize self.model here and execute kmeans clustering here
         '''
-        self.model = KMeans(n_clusters=3)
+        self.model = KMeans(n_clusters=3, max_iter=100, init='k-means++')
         self.model.fit(self.data)
         
         cluster_centers = self.model.cluster_centers_

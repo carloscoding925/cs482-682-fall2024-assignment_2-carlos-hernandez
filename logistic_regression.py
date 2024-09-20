@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression,LinearRegression
 import argparse
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+import matplotlib.pyplot as plt
 
 class MyLogisticRegression:
     def __init__(self, dataset_num, perform_test):
